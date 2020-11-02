@@ -73,7 +73,7 @@ pipeline{
 		success{
 			cleanWs()
 		}
-		failed{
+		failure{
 			sh "echo failed"
 		}
 	}
