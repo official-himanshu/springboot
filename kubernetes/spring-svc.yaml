@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: springboot
+  namespace: capstone
+  labels:
+    name: springboot
+spec:
+  type: LoadBalancer
+  ports:
+    - nodePort: 31000 
+      port: 8080      
+      targetPort: 8080  
+      protocol: TCP
+  selector:           
+    app: springboot 
