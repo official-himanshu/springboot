@@ -15,7 +15,7 @@ pipeline{
 
 		stage('Test'){
 			steps{
-				sh "echo -------testing----------"
+				sh "echo --------testing----------"
 				withMaven(jdk: 'java8', maven: 'Maven3') {
     				sh "mvn test"
 				}
@@ -41,12 +41,12 @@ pipeline{
 				branch 'master'
 			}
 			steps{
-				script{
-          			dockerImage = docker.build(registry + ":$BUILD_NUMBER -f Dockerfile target/")
-          			docker.withRegistry( '',registryCredential){
-        		  	dockerImage.push()
-          			}
+				sh 'docker build -t $registry:$BUILD_NUMBER -f Dockerfile target/'
+                echo "Image Build successfull"
+                withDockerRegistry([ credentialsId: "docker", url: "" ]) {
+                    sh 'docker push $registry:$BUILD_NUMBER'
 				}
+				echo "Image pushed successfully"
 			}
 		}
 		stage('deploy to production'){
