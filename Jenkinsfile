@@ -1,7 +1,7 @@
 pipeline{
 	agent any
 	environment{
-		registry = 'himanshuchaudhary/springboot'
+		registry = 'himanshuchaudhary/spring-boot'
 	}
 	stages{
 		stage('Compile'){
@@ -56,9 +56,8 @@ pipeline{
 			steps{
 				withKubeConfig(
             		clusterName: 'gke_resounding-sled-291408_us-central1-c_cluster-1', contextName: 'gke_resounding-sled-291408_us-central1-c_cluster-1', credentialsId: 'kube-config', namespace: 'capstone') {
-            		sh "cat deployment.yml | sed 's/springboot:v3/angular-app:'"'$BUILD_NUMBER'"'/' | kubectl apply -f -"
-            }
-				
+            			sh "cat kubernetes/deployment.yml | sed 's/spring-boot:v5/spring-boot:$BUILD_NUMBER/' | kubectl apply -f -"
+				}
 			}
 		}
 		post{
