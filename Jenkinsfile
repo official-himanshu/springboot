@@ -2,6 +2,7 @@ pipeline{
 	agent any
 	environment{
 		registry = 'himanshuchaudhary/spring-boot'
+		docker = credentials('docker')
 	}
 	stages{
 		stage('Compile'){
@@ -44,12 +45,10 @@ pipeline{
 				script{
 					def dockerfile = 'Dockerfile'
             		dockerImage = docker.build("${registry}:$BUILD_NUMBER","-f ${dockerfile} target/")
-            		docker.withRegistry( '',docker ){
+            		docker.withRegistry( '',docker){
             		dockerImage.push()
-          		}
-	    	}
-				sh 'docker rmi $registry:$BUILD_NUMBER'
-				echo "--------Image deleted successfully------"
+          			}
+	    		}
 			}
 		}
 		stage('deploy to production'){
