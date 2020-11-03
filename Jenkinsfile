@@ -48,6 +48,8 @@ pipeline{
             		dockerImage.push()
           			}
 	    		}
+	    		sh 'docker rmi $registry:$BUILD_NUMBER'
+          		sh "echo ----image removed from local------"
 			}
 		}
 		stage('deploy to production'){
