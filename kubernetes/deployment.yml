@@ -15,32 +15,11 @@ spec:
     spec:
       containers:
         - name: springboot
-          image: docker.io/himanshuchaudhary/spring-boot:v5
+          image: docker.io/himanshuchaudhary/spring-boot:7
           imagePullPolicy: Always
           ports:
             - containerPort: 8080  
           resources:
             requests:
-              cpu: 250m
-              memory: 1Gi              
-          # env:   # Setting Enviornmental Variables
-          # - name: MYSQL_DATABASE_URL   # Setting Database host address from configMap
-          #   valueFrom: 
-          #     configMapKeyRef:
-          #       name: mysql-config  # name of configMap
-          #       key: MYSQL_DATABASE_URL
-          # - name: MYSQL_DATABASE  # Setting Database name from configMap
-          #   valueFrom:
-          #     configMapKeyRef:
-          #       name: mysql-config 
-          #       key: MYSQL_DATABASE
-          # - name: MYSQL_USER  # Setting Database username from Secret
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: mysql-secret # Secret Name
-          #       key: MYSQL_USER
-          # - name: MYSQL_PASSWORD # Setting Database password from Secret
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: mysql-secret
-          #       key: MYSQL_PASSWORD    
+              cpu: 100m
+              memory: 512Mi              
