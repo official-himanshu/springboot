@@ -2,7 +2,6 @@ pipeline{
 	agent any
 	environment{
 		registry = 'himanshuchaudhary/spring-boot'
-		docker = credentials('docker')
 	}
 	stages{
 		stage('Compile'){
@@ -45,7 +44,7 @@ pipeline{
 				script{
 					def dockerfile = 'Dockerfile'
             		dockerImage = docker.build("${registry}:$BUILD_NUMBER","-f ${dockerfile} target/")
-            		docker.withRegistry( '',docker){
+            		docker.withRegistry( '','docker-hub'){
             		dockerImage.push()
           			}
 	    		}
