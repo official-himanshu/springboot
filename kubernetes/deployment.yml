@@ -7,11 +7,13 @@ spec:
   selector:         
     matchLabels:
       app: springboot
+      tier: backend
   replicas: 1        
   template:
     metadata:
       labels:        
         app: springboot
+        tier: backend
     spec:
       containers:
         - name: springboot

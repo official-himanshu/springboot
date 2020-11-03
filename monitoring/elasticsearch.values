@@ -60,15 +60,15 @@ podAnnotations: {}
 # additionals labels
 labels: {}
 
-esJavaOpts: "-Xmx256m -Xms256m"
+esJavaOpts: "-Xmx512m -Xms512m"
 
 resources:
   requests:
-    cpu: "500m"
-    memory: "1Gi"
+    cpu: "200m"
+    memory: "1600Mi"
   limits:
-    cpu: "500m"
-    memory: "1Gi"
+    cpu: "800m"
+    memory: "1600Mi"
 
 initResources: {}
   # limits:

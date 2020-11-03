@@ -32,7 +32,7 @@ pipeline{
     				sh "mvn package"
 				}
 				archiveArtifacts artifacts: 'target/*.jar', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
-                sh "echo ##########Successfully archived##################"
+                sh "echo -----------Successfully archived-------------"
 			}
 		}
 
@@ -41,12 +41,15 @@ pipeline{
 				branch 'master'
 			}
 			steps{
-				sh 'docker build -t $registry:$BUILD_NUMBER -f Dockerfile target/'
-                echo "Image Build successfull"
-                withDockerRegistry([ credentialsId: "docker", url: "" ]) {
-                    sh 'docker push $registry:$BUILD_NUMBER'
-				}
-				echo "Image pushed successfully"
+				script{
+					def dockerfile = 'Dockerfile'
+            		dockerImage = docker.build("${registry}:$BUILD_NUMBER","-f ${dockerfile} target/")
+            		docker.withRegistry( '',docker ){
+            		dockerImage.push()
+          		}
+	    	}
+				sh 'docker rmi $registry:$BUILD_NUMBER'
+				echo "--------Image deleted successfully------"
 			}
 		}
 		stage('deploy to production'){
@@ -56,7 +59,7 @@ pipeline{
 			steps{
 				withKubeConfig(
             		clusterName: 'gke_resounding-sled-291408_us-central1-c_cluster-1', contextName: 'gke_resounding-sled-291408_us-central1-c_cluster-1', credentialsId: 'kube-config', namespace: 'capstone') {
-            			sh "cat kubernetes/deployment.yml | sed 's/spring-boot:v5/spring-boot:$BUILD_NUMBER/' | kubectl apply -f -"
+            			sh "cat kubernetes/deployment.yml | sed 's/spring-boot:7/spring-boot:$BUILD_NUMBER/' | kubectl apply -f -"
 				}
 			}
 		}

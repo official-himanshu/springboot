@@ -1,0 +1,3 @@
+helm install elasticsearch elastic/elasticsearch -f elasticsearch.values -n capstone
+helm install kibana elastic/kibana -f kibana.values -n capstone
+helm install filebeat elastic/filebeat -n capstone
