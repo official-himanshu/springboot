@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: springboot
-          image: docker.io/himanshuchaudhary/spring-boot:7
+          image: docker.io/himanshuchaudhary/spring-boot:12
           imagePullPolicy: Always
           ports:
             - containerPort: 8080  
