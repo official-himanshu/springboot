@@ -49,11 +49,8 @@ pipeline{
           			}
 	    		}
 	    		sh 'docker rmi $registry:$BUILD_NUMBER'
-<<<<<<< HEAD
           		sh "echo ----image removed from local------"
-=======
 				echo "--------Image deleted successfully------"
->>>>>>> testing
 			}
 		}
 		stage('deploy to production'){
