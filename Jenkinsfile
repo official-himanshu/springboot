@@ -6,7 +6,6 @@ pipeline{
 	stages{
 		stage('Compile'){
 			steps{
-				sh "echo -------Compiling----------"
 				withMaven(jdk: 'java8', maven: 'Maven3') {
     				sh "mvn compile"
 				}
@@ -15,7 +14,6 @@ pipeline{
 
 		stage('Test'){
 			steps{
-				sh "echo --------testing----------"
 				withMaven(jdk: 'java8', maven: 'Maven3') {
     				sh "mvn test"
 				}
@@ -27,12 +25,9 @@ pipeline{
 				branch 'master'
 			}
 			steps{
-				sh "echo -------packaging----------"
 				withMaven(jdk: 'java8', maven: 'Maven3') {
     				sh "mvn package"
 				}
-				archiveArtifacts artifacts: 'target/*.jar', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
-                sh "echo -----------Successfully archived-------------"
 			}
 		}
 
@@ -49,8 +44,6 @@ pipeline{
           			}
 	    		}
 	    		sh 'docker rmi $registry:$BUILD_NUMBER'
-          		sh "echo ----image removed from local------"
-				echo "--------Image deleted successfully------"
 			}
 		}
 		stage('deploy to production'){
@@ -66,19 +59,16 @@ pipeline{
 		}
 	}	
 	post{
-		always{
+		success{
+			cleanWs()
+		}
+		failure{
 			emailext ( 
 				subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!!', 
 				body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:Check console output at $BUILD_URL to view the results.',
 				to : 'himanshuchaudhary426@gmail.com',
 				attachLog: true
-				)
-		}
-		success{
-			cleanWs()
-		}
-		failure{
-			sh "echo failed"
+			)
 		}
 	}
 }
