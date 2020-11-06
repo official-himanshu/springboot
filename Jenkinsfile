@@ -4,14 +4,6 @@ pipeline{
 		registry = 'himanshuchaudhary/spring-boot'
 	}
 	stages{
-		stage('Compile'){
-			steps{
-				withMaven(jdk: 'java8', maven: 'Maven3') {
-    				sh "mvn compile"
-				}
-			}
-		}
-
 		stage('Test'){
 			steps{
 				withMaven(jdk: 'java8', maven: 'Maven3') {

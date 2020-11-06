@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: capstone
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api
+        backend:
+          serviceName: springboot
+          servicePort: 8080
+      - path: /
+        backend:
+          servicePort: 80
+          serviceName: angular-service
+      - path: /registry
+        backend:
+          servicePort: 5000
+          serviceName: registry
+
