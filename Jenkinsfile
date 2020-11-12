@@ -18,7 +18,7 @@ pipeline{
 			}
 			steps{
 				withMaven(jdk: 'java8', maven: 'Maven3') {
-    				sh "mvn package"
+    				sh "mvn -DskipTests package"
 				}
 			}
 		}

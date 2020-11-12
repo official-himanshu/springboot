@@ -1,4 +1,4 @@
 FROM openjdk:8-alpine
-ADD Student-0.0.1-SNAPSHOT.jar app.jar
+COPY Student-0.0.1-SNAPSHOT.jar .
 
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["java","-jar","Student-0.0.1-SNAPSHOT.jar"]
